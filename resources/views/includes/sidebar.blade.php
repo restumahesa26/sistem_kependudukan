@@ -52,15 +52,5 @@
         </a>
     </li>
     <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Personal
-    </div>
-    <li class="nav-item @if(Route::is('profile.*')) active @endif">
-        <a class="nav-link" href="{{ route('profile.edit') }}">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Profile</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider">
     <div class="version" id="version-ruangadmin"></div>
 </ul>
