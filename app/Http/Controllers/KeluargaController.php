@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PendudukMiskinExport;
+use App\Exports\PendudukMiskinYearExport;
 use App\Exports\PendudukPendatangExport;
+use App\Exports\PendudukPendatangYearExport;
 use App\Exports\PendudukPindahExport;
+use App\Exports\PendudukPindahYearExport;
 use App\Exports\SemuaPendudukExport;
 use App\Models\AnggotaKeluarga;
 use App\Models\Keluarga;
@@ -236,18 +239,30 @@ class KeluargaController extends Controller
         return Excel::download(new SemuaPendudukExport, 'data-semua-penduduk.xlsx');
     }
 
-    public function export_penduduk_miskin()
+    public function export_penduduk_miskin(Request $request)
     {
-        return Excel::download(new PendudukMiskinExport, 'data-penduduk-miskin.xlsx');
+        if ($request->year) {
+            return Excel::download(new PendudukMiskinYearExport($request->year), 'data-penduduk-miskin-tahun-'. $request->year .'.xlsx');
+        } else {
+            return Excel::download(new PendudukMiskinExport, 'data-penduduk-miskin.xlsx');
+        }
     }
 
-    public function export_penduduk_pindah()
+    public function export_penduduk_pindah(Request $request)
     {
-        return Excel::download(new PendudukPindahExport, 'data-penduduk-pindah.xlsx');
+        if ($request->year) {
+            return Excel::download(new PendudukPindahYearExport($request->year), 'data-penduduk-pindah-tahun-'. $request->year .'.xlsx');
+        } else {
+            return Excel::download(new PendudukPindahExport, 'data-penduduk-pindah.xlsx');
+        }
     }
 
-    public function export_penduduk_pendatang()
+    public function export_penduduk_pendatang(Request $request)
     {
-        return Excel::download(new PendudukPendatangExport, 'data-penduduk-pendatang.xlsx');
+        if ($request->year) {
+            return Excel::download(new PendudukPendatangYearExport($request->year), 'data-penduduk-pindah-tahun-'. $request->year .'.xlsx');
+        } else {
+            return Excel::download(new PendudukPendatangExport, 'data-penduduk-pindah.xlsx');
+        }
     }
 }

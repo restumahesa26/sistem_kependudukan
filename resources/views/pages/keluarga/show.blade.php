@@ -75,6 +75,15 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="tanggal_miskin">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_miskin" id="tanggal_miskin" class="form-control @error('tanggal_miskin') is-invalid @enderror">
+                                @error('tanggal_miskin')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -90,6 +99,15 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="tanggal_pindah">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_pindah" id="tanggal_pindah" class="form-control @error('tanggal_pindah') is-invalid @enderror">
+                                @error('tanggal_pindah')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -100,6 +118,15 @@
                                     <option value="1" @if(old('is_pendatang', $item->is_pendatang) == '1') selected @endif>Ya</option>
                                 </select>
                                 @error('is_pendatang')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_pendatang">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_pendatang" id="tanggal_pendatang" class="form-control @error('tanggal_pendatang') is-invalid @enderror">
+                                @error('tanggal_pendatang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

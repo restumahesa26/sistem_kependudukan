@@ -16,7 +16,7 @@ class Keluarga extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'no_kk', 'alamat', 'rt', 'rw', 'is_pendatang', 'is_miskin', 'is_pindah'
+        'no_kk', 'alamat', 'rt', 'rw', 'is_pendatang', 'is_miskin', 'is_pindah', 'tanggal_pendatang', 'tanggal_miskin', 'tanggal_pindah'
     ];
 
     public function anggota_keluarga()

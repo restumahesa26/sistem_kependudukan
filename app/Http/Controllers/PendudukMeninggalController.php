@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PendudukMeninggalExport;
+use App\Exports\PendudukMeninggalYearExport;
 use App\Models\AnggotaKeluarga;
 use App\Models\PendudukMeninggal;
 use Illuminate\Http\Request;
@@ -171,8 +172,12 @@ class PendudukMeninggalController extends Controller
         return redirect()->route('data-penduduk.create-anggota', $no_kk)->with('success', 'Berhasil Mengembalikan Penduduk');
     }
 
-    public function export_penduduk_meninggal()
+    public function export_penduduk_meninggal(Request $request)
     {
-        return Excel::download(new PendudukMeninggalExport, 'data-penduduk-meninggal.xlsx');
+        if ($request->year) {
+            return Excel::download(new PendudukMeninggalYearExport($request->year), 'data-penduduk-meninggal-tahun-'. $request->year .'.xlsx');
+        } else {
+            return Excel::download(new PendudukMeninggalExport, 'data-penduduk-meninggal.xlsx');
+        }
     }
 }
