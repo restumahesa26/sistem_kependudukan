@@ -89,6 +89,7 @@
             </div>
         </div>
     </div>
+    @if ($tipe == 'penduduk-miskin')
     <div class="modal fade" id="modal_tambah_miskin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -106,7 +107,7 @@
                             <select name="penduduk" id="miskin" class="form-control select2-penduduk-miskin" style="width: 400px;">
                                 <option value="" hidden>-- Pilih Penduduk --</option>
                                 @foreach ($datas as $data)
-                                    <option value="{{ $data->no_kk }}">{{ $data->kepala_keluarga->nama }}</option>
+                                    <option value="{{ $data->no_kk }}">{{ $data->no_kk }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -116,6 +117,7 @@
             </div>
         </div>
     </div>
+    @elseif ($tipe == 'penduduk-pindah')
     <div class="modal fade" id="modal_tambah_pindah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -133,7 +135,7 @@
                             <select name="penduduk" id="pindah" class="form-control select2-penduduk-pindah" style="width: 400px;">
                                 <option value="" hidden>-- Pilih Penduduk --</option>
                                 @foreach ($datas as $data)
-                                    <option value="{{ $data->no_kk }}">{{ $data->kepala_keluarga->nama }}</option>
+                                    <option value="{{ $data->no_kk }}">{{ $data->no_kk }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -143,6 +145,7 @@
             </div>
         </div>
     </div>
+    @elseif ($tipe == 'penduduk-pendatang')
     <div class="modal fade" id="modal_tambah_pendatang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -160,7 +163,7 @@
                             <select name="penduduk" id="pendatang" class="form-control select2-penduduk-pendatang" style="width: 400px;">
                                 <option value="" hidden>-- Pilih Penduduk --</option>
                                 @foreach ($datas as $data)
-                                    <option value="{{ $data->no_kk }}">{{ $data->kepala_keluarga->nama }}</option>
+                                    <option value="{{ $data->no_kk }}">{{ $data->no_kk }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -170,6 +173,8 @@
             </div>
         </div>
     </div>
+    @endif
+
     @foreach ($items as $item2)
     <div class="modal fade" id="modal_pesan{{ $item2->no_kk }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
