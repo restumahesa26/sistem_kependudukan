@@ -33,12 +33,12 @@
             </div>
         </div>
     </li>
-    <li class="nav-item @if(Route::is('data-pegawai.*')) active @endif">
+    {{-- <li class="nav-item @if(Route::is('data-pegawai.*')) active @endif">
         <a class="nav-link" href="{{ route('data-pegawai.index') }}">
             <i class="fas fa-fw fa-address-book"></i>
             <span>Data Pegawai</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item @if(Route::is('data-pengguna.*')) active @endif">
         <a class="nav-link" href="{{ route('data-pengguna.index') }}">
             <i class="fas fa-fw fa-users"></i>
