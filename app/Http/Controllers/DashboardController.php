@@ -15,7 +15,7 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $semua_penduduk = AnggotaKeluarga::count();
+        $semua_penduduk = AnggotaKeluarga::join('keluargas AS keluarga', 'keluarga.no_kk', '=', 'anggota_keluargas.no_kk')->where('keluarga.is_pindah', '!=', '1')->count();
         $miskin = Keluarga::where('is_miskin', '1')->count();
         $pindah = Keluarga::where('is_pindah', '1')->count();
         $pendatang = Keluarga::where('is_pendatang', '1')->count();

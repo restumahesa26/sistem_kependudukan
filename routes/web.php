@@ -73,7 +73,7 @@ Route::middleware(['auth'])
 
         Route::resource('data-pengguna', PenggunaController::class);
 
-        Route::resource('data-pegawai', PegawaiController::class);
+        Route::get('/data-penduduk/keluarga/cetak-sktm', [KeluargaController::class, 'cetak_sktm'])->name('data-penduduk.cetak-sktm');
 
     });
 

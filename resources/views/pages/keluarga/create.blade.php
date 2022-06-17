@@ -63,7 +63,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_miskin">Apakah Keluarga Miskin?</label>
-                                <select name="is_miskin" id="is_miskin" class="form-control">
+                                <select name="is_miskin" id="is_miskin" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Miskin --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>
@@ -74,16 +74,34 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="tanggal_miskin">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_miskin" id="tanggal_miskin" class="form-control @error('tanggal_miskin') is-invalid @enderror" value="{{ old('tanggal_miskin') }}">
+                                @error('tanggal_miskin')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pindah">Apakah Keluarga Pindah?</label>
-                                <select name="is_pindah" id="is_pindah" class="form-control">
+                                <select name="is_pindah" id="is_pindah" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pindah --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>
                                 </select>
                                 @error('is_pindah')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_pindah">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_pindah" id="tanggal_pindah" class="form-control @error('tanggal_pindah') is-invalid @enderror" value="{{ old('tanggal_pindah') }}">
+                                @error('tanggal_pindah')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -99,6 +117,15 @@
                                     <option value="1">Ya</option>
                                 </select>
                                 @error('is_pendatang')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_pendatang">Sejak Tanggal</label>
+                                <input type="date" name="tanggal_pendatang" id="tanggal_pendatang" class="form-control @error('tanggal_pendatang') is-invalid @enderror" value="{{ old('tanggal_pendatang') }}">
+                                @error('tanggal_pendatang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -18,4 +18,9 @@ class AnggotaKeluarga extends Model
     protected $fillable = [
         'nik', 'nama', 'no_kk', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'pendidikan', 'pekerjaan', 'status_perkawinan', 'status_hubungan', 'urutan'
     ];
+
+    public function kepala_keluarga()
+    {
+        return $this->hasOne(Keluarga::class, 'no_kk', 'no_kk');
+    }
 }

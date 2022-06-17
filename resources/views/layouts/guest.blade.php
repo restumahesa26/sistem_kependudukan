@@ -15,9 +15,40 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <style type="text/css" media="screen">
+            html,
+            body {
+                height: 100%;
+                background-color: #00b98e;
+            }
+
+            body {
+                display: flex;
+                align-items: center;
+            }
+
+            .form-signin {
+                width: 100%;
+                max-width: 450px;
+                margin: auto;
+            }
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+            .form-signin .form-control {
+                position: relative;
+                box-sizing: border-box;
+                height: auto;
+                font-size: 16px;
+            }
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+        </style>
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
+        <div class="font-sans form-signin">
             {{ $slot }}
         </div>
     </body>

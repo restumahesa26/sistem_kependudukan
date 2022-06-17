@@ -16,7 +16,7 @@ class SemuaPendudukExport implements FromCollection, WithHeadings, ShouldAutoSiz
     */
     public function collection()
     {
-        return Keluarga::with(['anggota_keluargas','kepala_keluarga','anggota_keluarga'])->get();
+        return Keluarga::with(['anggota_keluargas','kepala_keluarga','anggota_keluarga'])->where('is_pindah', '!=', '1')->get();
     }
 
     public function map($keluarga): array

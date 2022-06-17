@@ -9,6 +9,7 @@ use App\Exports\PendudukPendatangYearExport;
 use App\Exports\PendudukPindahExport;
 use App\Exports\PendudukPindahYearExport;
 use App\Exports\SemuaPendudukExport;
+use App\Exports\SemuaPendudukYearExport;
 use App\Models\AnggotaKeluarga;
 use App\Models\Keluarga;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class KeluargaController extends Controller
     public function index($tipe)
     {
         if ($tipe == 'semua-penduduk') {
-            $items = Keluarga::latest('updated_at')->get();
+            $items = Keluarga::latest('updated_at')->where('is_pindah', '!=', '1')->get();
 
             $datas = Keluarga::all();
 
@@ -31,8 +32,10 @@ class KeluargaController extends Controller
 
             $datas = Keluarga::all();
 
+            $anggota = AnggotaKeluarga::join('keluargas AS keluarga', 'keluarga.no_kk', '=', 'anggota_keluargas.no_kk')->where('keluarga.is_miskin', '1')->where('anggota_keluargas.urutan', '!=', 1)->get();
+
             return view('pages.keluarga.index', [
-                'items' => $items, 'tipe' => $tipe, 'datas' => $datas
+                'items' => $items, 'tipe' => $tipe, 'datas' => $datas, 'anggotas' => $anggota
             ]);
         }elseif ($tipe == 'penduduk-pindah') {
             $items = Keluarga::where('is_pindah', '1')->latest('updated_at')->get();
@@ -61,10 +64,10 @@ class KeluargaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_kk' => ['required', 'string', 'max:255', 'unique:keluargas'],
-            'alamat' => ['required', 'string', 'max:255'],
-            'rt' => ['required', 'string', 'max:255'],
-            'rw' => ['required', 'string', 'max:255'],
+            'no_kk' => ['required', 'string', 'max:16', 'unique:keluargas', 'min:16'],
+            'alamat' => ['required', 'string', 'max:100'],
+            'rt' => ['required', 'string', 'max:10'],
+            'rw' => ['required', 'string', 'max:10'],
         ]);
 
         Keluarga::create([
@@ -75,6 +78,9 @@ class KeluargaController extends Controller
             'is_miskin' => $request->is_miskin,
             'is_pindah' => $request->is_pindah,
             'is_pendatang' => $request->is_pendatang,
+            'tanggal_miskin' => $request->tanggal_miskin,
+            'tanggal_pindah' => $request->tanggal_pindah,
+            'tanggal_pendatang' => $request->tanggal_pendatang,
         ]);
 
         return redirect()->route('data-penduduk.index', 'semua-penduduk')->with('success', 'Berhasil Menambah Data Keluarga');
@@ -94,14 +100,14 @@ class KeluargaController extends Controller
         $item = Keluarga::findOrFail($no_kk);
 
         $request->validate([
-            'alamat' => ['required', 'string', 'max:255'],
-            'rt' => ['required', 'string', 'max:255'],
-            'rw' => ['required', 'string', 'max:255'],
+            'alamat' => ['required', 'string', 'max:100'],
+            'rt' => ['required', 'string', 'max:10'],
+            'rw' => ['required', 'string', 'max:10'],
         ]);
 
         if ($request->no_kk != $item->no_kk) {
             $request->validate([
-                'no_kk' => ['required', 'string', 'max:255', 'unique:keluargas'],
+                'no_kk' => ['required', 'string', 'max:16', 'unique:keluargas', 'min:16'],
             ]);
         }
 
@@ -112,6 +118,9 @@ class KeluargaController extends Controller
         $item->is_miskin = $request->is_miskin;
         $item->is_pindah = $request->is_pindah;
         $item->is_pendatang = $request->is_pendatang;
+        $item->tanggal_miskin = $request->tanggal_miskin;
+        $item->tanggal_pindah = $request->tanggal_pindah;
+        $item->tanggal_pendatang = $request->tanggal_pendatang;
         $item->save();
 
         return redirect()->route('data-penduduk.create-anggota', $request->no_kk)->with('success', 'Berhasil Mengubah Data Keluarga');
@@ -120,14 +129,14 @@ class KeluargaController extends Controller
     public function store_anggota(Request $request, $no_kk)
     {
         $request->validate([
-            'nik' => ['required', 'string', 'max:255', 'unique:anggota_keluargas'],
-            'nama' => ['required', 'string', 'max:255'],
-            'tempat_lahir' => ['required', 'string', 'max:255'],
+            'nik' => ['required', 'string', 'max:16', 'unique:anggota_keluargas', 'min:16'],
+            'nama' => ['required', 'string', 'max:100'],
+            'tempat_lahir' => ['required', 'string', 'max:100'],
             'tanggal_lahir' => ['required', 'date'],
             'jenis_kelamin' => ['required', 'in:L,P'],
-            'agama' => ['required', 'string', 'max:255'],
-            'pendidikan' => ['required', 'string', 'max:255'],
-            'pekerjaan' => ['required', 'string', 'max:255'],
+            'agama' => ['required', 'string', 'max:20'],
+            'pendidikan' => ['required', 'string', 'max:50'],
+            'pekerjaan' => ['required', 'string', 'max:50'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
             'urutan' => ['required', 'numeric'],
@@ -156,13 +165,13 @@ class KeluargaController extends Controller
         $item = AnggotaKeluarga::findOrFail($nik);
 
         $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'tempat_lahir' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:100'],
+            'tempat_lahir' => ['required', 'string', 'max:100'],
             'tanggal_lahir' => ['required', 'date'],
             'jenis_kelamin' => ['required', 'in:L,P'],
-            'agama' => ['required', 'string', 'max:255'],
-            'pendidikan' => ['required', 'string', 'max:255'],
-            'pekerjaan' => ['required', 'string', 'max:255'],
+            'agama' => ['required', 'string', 'max:20'],
+            'pendidikan' => ['required', 'string', 'max:50'],
+            'pekerjaan' => ['required', 'string', 'max:50'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
             'urutan' => ['required', 'numeric'],
@@ -170,7 +179,7 @@ class KeluargaController extends Controller
 
         if ($request->nik != $item->nik) {
             $request->validate([
-                'nik' => ['required', 'string', 'max:255', 'unique:anggota_keluargas'],
+                'nik' => ['required', 'string', 'max:16', 'unique:anggota_keluargas', 'min:16'],
             ]);
         }
 
@@ -263,6 +272,30 @@ class KeluargaController extends Controller
             return Excel::download(new PendudukPendatangYearExport($request->year), 'data-penduduk-pindah-tahun-'. $request->year .'.xlsx');
         } else {
             return Excel::download(new PendudukPendatangExport, 'data-penduduk-pindah.xlsx');
+        }
+    }
+
+    public function cetak_sktm(Request $request)
+    {
+        $nik = $request->penduduk;
+
+        $item = AnggotaKeluarga::where('nik', $nik)->first();
+
+        $noKK = $item->no_kk;
+
+        $check = Keluarga::where('no_kk', $noKK)->first();
+
+        if ($check->is_miskin == '1') {
+            return view('pages.keluarga.cetak-sktm', [
+                'item' => $item,
+                'nomor_surat' => $request->nomor_surat,
+                'dari_rt_rw' => $request->dari_rt_rw,
+                'nomor_surat_rt' => $request->nomor_surat_rt,
+                'tanggal_surat_rt' => $request->tanggal_surat_rt,
+                'fungsi' => $request->fungsi,
+            ]);
+        }else {
+            return redirect()->route('data-penduduk.index', 'penduduk-miskin')->with('error', 'Bukan Keluarga Tidak Mampu');
         }
     }
 }

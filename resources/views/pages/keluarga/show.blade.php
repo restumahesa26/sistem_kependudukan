@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_miskin">Sejak Tanggal</label>
-                                <input type="date" name="tanggal_miskin" id="tanggal_miskin" class="form-control @error('tanggal_miskin') is-invalid @enderror">
+                                <input type="date" name="tanggal_miskin" id="tanggal_miskin" class="form-control @error('tanggal_miskin') is-invalid @enderror" value="{{ old('tanggal_miskin', $item->tanggal_miskin) }}">
                                 @error('tanggal_miskin')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pindah">Sejak Tanggal</label>
-                                <input type="date" name="tanggal_pindah" id="tanggal_pindah" class="form-control @error('tanggal_pindah') is-invalid @enderror">
+                                <input type="date" name="tanggal_pindah" id="tanggal_pindah" class="form-control @error('tanggal_pindah') is-invalid @enderror" value="{{ old('tanggal_pindah', $item->tanggal_pindah) }}">
                                 @error('tanggal_pindah')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -125,7 +125,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_pendatang">Sejak Tanggal</label>
-                                <input type="date" name="tanggal_pendatang" id="tanggal_pendatang" class="form-control @error('tanggal_pendatang') is-invalid @enderror">
+                                <input type="date" name="tanggal_pendatang" id="tanggal_pendatang" class="form-control @error('tanggal_pendatang') is-invalid @enderror" value="{{ old('tanggal_pendatang', $item->tanggal_pendatang) }}">
                                 @error('tanggal_pendatang')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -150,6 +150,7 @@
                     <table class="table table-bordered text-nowrap table-hover align-items-center" id="dataTable">
                         <thead>
                             <tr>
+                                <th>Urutan</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Tempat, Tanggal Lahir</th>
@@ -160,6 +161,7 @@
                         <tbody>
                             @forelse ($item->anggota_keluarga as $item2)
                                 <tr>
+                                    <td>{{ $item2->urutan }}</td>
                                     <td>{{ $item2->nik }}</td>
                                     <td>{{ $item2->nama }}</td>
                                     <td>{{ $item2->tempat_lahir }}, {{ \Carbon\Carbon::parse($item2->tanggal_lahir)->translatedFormat('d F Y') }}</td>
@@ -277,7 +279,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="agama">Agama</label>
-                                        <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" placeholder="Masukkan Agama" value="{{ old('agama') }}" required>
+                                        <select name="agama" id="agama" class="form-control @error('agama') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Agama --</option>
+                                            <option value="Islam" @if(old('agama') == 'Islam') selected @endif>Islam</option>
+                                            <option value="Katolik" @if(old('agama') == 'Katolik') selected @endif>Katolik</option>
+                                            <option value="Protestan" @if(old('agama') == 'Protestan') selected @endif>Protestan</option>
+                                            <option value="Hindu" @if(old('agama') == 'Hindu') selected @endif>Hindu</option>
+                                            <option value="Buddha" @if(old('agama') == 'Buddha') selected @endif>Buddha</option>
+                                            <option value="Konghucu" @if(old('agama') == 'Konghucu') selected @endif>Konghucu</option>
+                                        </select>
                                         @error('agama')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -290,7 +300,18 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="pendidikan">Pendidikan</label>
-                                        <input type="text" class="form-control @error('pendidikan') is-invalid @enderror" id="pendidikan" name="pendidikan" placeholder="Masukkan Pendidikan" value="{{ old('pendidikan') }}" required>
+                                        <select name="pendidikan" id="pendidikan" class="form-control @error('pendidikan') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Pendidikan --</option>
+                                            <option value="Tidak / Belum Sekolah" @if(old('pendidikan') == 'Tidak / Belum Sekolah') selected @endif>Tidak / Belum Sekolah</option>
+                                            <option value="Belum Tamat SD / Sederajat" @if(old('pendidikan') == 'Belum Tamat SD / Sederajat') selected @endif>Belum Tamat SD / Sederajat</option>
+                                            <option value="Tamat SD / Sederajat" @if(old('pendidikan') == 'Tamat SD / Sederajat') selected @endif>Tamat SD / Sederajat</option>
+                                            <option value="SLTP / Sederajat" @if(old('pendidikan') == 'SLTP / Sederajat') selected @endif>SLTP / Sederajat</option>
+                                            <option value="SLTA / Sederajat" @if(old('pendidikan') == 'SLTA / Sederajat') selected @endif>SLTA / Sederajat</option>
+                                            <option value="Diploma I / II / III" @if(old('pendidikan') == 'Diploma I / II / III') selected @endif>Diploma I / II / III</option>
+                                            <option value="Diploma IV / Strata I" @if(old('pendidikan') == 'Diploma IV / Strata I') selected @endif>Diploma IV / Strata I</option>
+                                            <option value="Strata II" @if(old('pendidikan') == 'Strata II') selected @endif>Strata II</option>
+                                            <option value="Strata III" @if(old('pendidikan') == 'Strata III') selected @endif>Strata III</option>
+                                        </select>
                                         @error('pendidikan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -301,7 +322,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="pekerjaan">Pekerjaan</label>
-                                        <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" placeholder="Masukkan Pekerjaan" value="{{ old('pekerjaan') }}" required>
+                                        <select name="pekerjaan" id="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Pekerjaan --</option>
+                                            <option value="Belum / Tidak Bekerja" @if(old('pekerjaan') == 'Belum / Tidak Bekerja') selected @endif>Belum / Tidak Bekerja</option>
+                                            <option value="Mengurus Rumah Tangga" @if(old('pekerjaan') == 'Mengurus Rumah Tangga') selected @endif>Mengurus Rumah Tangga</option>
+                                            <option value="Pelajar / Mahasiswa" @if(old('pekerjaan') == 'Pelajar / Mahasiswa') selected @endif>Pelajar / Mahasiswa</option>
+                                            <option value="Pegawai Negeri Sipil" @if(old('pekerjaan') == 'Pegawai Negeri Sipil') selected @endif>Pegawai Negeri Sipil</option>
+                                            <option value="Buruh" @if(old('pekerjaan') == 'Buruh') selected @endif>Buruh</option>
+                                            <option value="Karyawan Swasta" @if(old('pekerjaan') == 'Karyawan Swasta') selected @endif>Karyawan Swasta</option>
+                                            <option value="Wirausaha" @if(old('pekerjaan') == 'Wirausaha') selected @endif>Wirausaha</option>
+                                            <option value="Lainnya" @if(old('pekerjaan') == 'Lainnya') selected @endif>Lainnya</option>
+                                        </select>
                                         @error('pekerjaan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -445,7 +476,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="agama">Agama</label>
-                                        <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" placeholder="Masukkan Agama" value="{{ old('agama', $item3->agama) }}" required>
+                                        <select name="agama" id="agama" class="form-control @error('agama') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Agama --</option>
+                                            <option value="Islam" @if(old('agama', $item3->agama) == 'Islam') selected @endif>Islam</option>
+                                            <option value="Katolik" @if(old('agama', $item3->agama) == 'Katolik') selected @endif>Katolik</option>
+                                            <option value="Protestan" @if(old('agama', $item3->agama) == 'Protestan') selected @endif>Protestan</option>
+                                            <option value="Hindu" @if(old('agama', $item3->agama) == 'Hindu') selected @endif>Hindu</option>
+                                            <option value="Buddha" @if(old('agama', $item3->agama) == 'Buddha') selected @endif>Buddha</option>
+                                            <option value="Konghucu" @if(old('agama', $item3->agama) == 'Konghucu') selected @endif>Konghucu</option>
+                                        </select>
                                         @error('agama')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -458,7 +497,18 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="pendidikan">Pendidikan</label>
-                                        <input type="text" class="form-control @error('pendidikan') is-invalid @enderror" id="pendidikan" name="pendidikan" placeholder="Masukkan Pendidikan" value="{{ old('pendidikan', $item3->pendidikan) }}" required>
+                                        <select name="pendidikan" id="pendidikan" class="form-control @error('pendidikan') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Pendidikan --</option>
+                                            <option value="Tidak / Belum Sekolah" @if(old('pendidikan', $item3->pendidikan) == 'Tidak / Belum Sekolah') selected @endif>Tidak / Belum Sekolah</option>
+                                            <option value="Belum Tamat SD / Sederajat" @if(old('pendidikan', $item3->pendidikan) == 'Belum Tamat SD / Sederajat') selected @endif>Belum Tamat SD / Sederajat</option>
+                                            <option value="Tamat SD / Sederajat" @if(old('pendidikan', $item3->pendidikan) == 'Tamat SD / Sederajat') selected @endif>Tamat SD / Sederajat</option>
+                                            <option value="SLTP / Sederajat" @if(old('pendidikan', $item3->pendidikan) == 'SLTP / Sederajat') selected @endif>SLTP / Sederajat</option>
+                                            <option value="SLTA / Sederajat" @if(old('pendidikan', $item3->pendidikan) == 'SLTA / Sederajat') selected @endif>SLTA / Sederajat</option>
+                                            <option value="Diploma I / II / III" @if(old('pendidikan', $item3->pendidikan) == 'Diploma I / II / III') selected @endif>Diploma I / II / III</option>
+                                            <option value="Diploma IV / Strata I" @if(old('pendidikan', $item3->pendidikan) == 'Diploma IV / Strata I') selected @endif>Diploma IV / Strata I</option>
+                                            <option value="Strata II" @if(old('pendidikan', $item3->pendidikan) == 'Strata II') selected @endif>Strata II</option>
+                                            <option value="Strata III" @if(old('pendidikan', $item3->pendidikan) == 'Strata III') selected @endif>Strata III</option>
+                                        </select>
                                         @error('pendidikan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -469,7 +519,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="pekerjaan">Pekerjaan</label>
-                                        <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror" id="pekerjaan" name="pekerjaan" placeholder="Masukkan Pekerjaan" value="{{ old('pekerjaan', $item3->pekerjaan) }}" required>
+                                        <select name="pekerjaan" id="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror" required>
+                                            <option value="" hidden>-- Pilih Pekerjaan --</option>
+                                            <option value="Belum / Tidak Bekerja" @if(old('pekerjaan', $item3->pekerjaan) == 'Belum / Tidak Bekerja') selected @endif>Belum / Tidak Bekerja</option>
+                                            <option value="Mengurus Rumah Tangga" @if(old('pekerjaan', $item3->pekerjaan) == 'Mengurus Rumah Tangga') selected @endif>Mengurus Rumah Tangga</option>
+                                            <option value="Pelajar / Mahasiswa" @if(old('pekerjaan', $item3->pekerjaan) == 'Pelajar / Mahasiswa') selected @endif>Pelajar / Mahasiswa</option>
+                                            <option value="Pegawai Negeri Sipil" @if(old('pekerjaan', $item3->pekerjaan) == 'Pegawai Negeri Sipil') selected @endif>Pegawai Negeri Sipil</option>
+                                            <option value="Buruh" @if(old('pekerjaan', $item3->pekerjaan) == 'Buruh') selected @endif>Buruh</option>
+                                            <option value="Karyawan Swasta" @if(old('pekerjaan', $item3->pekerjaan) == 'Karyawan Swasta') selected @endif>Karyawan Swasta</option>
+                                            <option value="Wirausaha" @if(old('pekerjaan', $item3->pekerjaan) == 'Wirausaha') selected @endif>Wirausaha</option>
+                                            <option value="Lainnya" @if(old('pekerjaan', $item3->pekerjaan) == 'Lainnya') selected @endif>Lainnya</option>
+                                        </select>
                                         @error('pekerjaan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

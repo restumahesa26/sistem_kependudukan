@@ -78,7 +78,7 @@
                             <h1 class="text-white mb-4 animated zoomIn">Sistem Informasi Kependudukan Kelurahan Panorama Kota Bengkulu</h1>
                             <p class="text-white pb-3 animated zoomIn">Membantu dalam Pengelolaan Data Penduduk pada Kelurahan Panorama Kota Bengkulu</p>
                             @if (!Auth::user())
-                            <a href="" class="btn btn-outline-light rounded-pill border-2 py-3 px-5 animated slideInRight">Login Sekarang</a>
+                            <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill border-2 py-3 px-5 animated slideInRight">Login Sekarang</a>
                             @endif
 
                         </div>

@@ -27,6 +27,9 @@
                     <button type="button" class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#modal_tambah_miskin">
                         Tambah Data Penduduk Miskin
                     </button>
+                    <button type="button" class="btn btn-warning btn-sm mb-3 px-5" data-toggle="modal" data-target="#modal_cetak_sktm">
+                        Cetak SKTM
+                    </button>
                 @elseif ($tipe == 'penduduk-pindah')
                     <button type="button" class="btn btn-primary btn-sm mb-3" data-toggle="modal" data-target="#modal_tambah_pindah">
                         Tambah Data Penduduk Pindah
@@ -65,7 +68,6 @@
                                         @else
                                             <span class="badge badge-danger">Silahkan masukkan anggota</span>
                                         @endif
-
                                     </td>
                                     <td>
                                         <a href="{{ route('data-penduduk.create-anggota', $item->no_kk) }}" class="btn btn-sm btn-primary">Lihat Data</a>
@@ -76,6 +78,7 @@
                                             <button type="submit" class="btn btn-sm btn-danger btn-hapus">Hapus Data</button>
                                         </form>
                                         @endif
+                                        </form>
                                     </td>
                                 </tr>
                             @empty
@@ -104,12 +107,74 @@
                         @csrf
                         <div class="form-group">
                             <label for="miskin">Pilih Penduduk</label><br>
-                            <select name="penduduk" id="miskin" class="form-control select2-penduduk-miskin" style="width: 400px;">
+                            <select name="penduduk" id="miskin2" class="form-control select2-penduduk-miskin" style="width: 400px;">
                                 <option value="" hidden>-- Pilih Penduduk --</option>
                                 @foreach ($datas as $data)
                                     <option value="{{ $data->no_kk }}">{{ $data->no_kk }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm btn-simpan">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_cetak_sktm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cetak Surat Keterangan Tidak Mampu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('data-penduduk.cetak-sktm') }}" target="_blank">
+                        <div class="form-group">
+                            <label for="miskin">Pilih Penduduk</label><br>
+                            <select name="penduduk" id="miskin" class="form-control select2-penduduk-miskin-2" style="width: 400px;">
+                                <option value="" hidden>-- Pilih Penduduk --</option>
+                                @foreach ($anggotas as $data)
+                                    <option value="{{ $data->nik }}">{{ $data->nama }} - {{ $data->nik }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomor_surat">Nomor Surat</label>
+                            <input type="text" class="form-control @error('nomor_surat') is-invalid @enderror" id="nomor_surat" name="nomor_surat" placeholder="Masukkan Nomor Surat" value="{{ old('nomor_surat') }}">
+                            @error('nomor_surat')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="nomor_surat_rt">Nomor Surat Dari RT / RW</label>
+                            <input type="text" class="form-control @error('nomor_surat_rt') is-invalid @enderror" id="nomor_surat_rt" name="nomor_surat_rt" placeholder="Masukkan Nomor Surat Dari RT / RW" value="{{ old('nomor_surat_rt') }}">
+                            @error('nomor_surat_rt')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_surat_rt">Tanggal Surat Dari RT / RW</label>
+                            <input type="date" class="form-control @error('tanggal_surat_rt') is-invalid @enderror" id="tanggal_surat_rt" name="tanggal_surat_rt" placeholder="Masukkan Tanggal Surat Dari RT / RW" value="{{ old('tanggal_surat_rt') }}">
+                            @error('tanggal_surat_rt')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="fungsi">Fungsi Surat</label>
+                            <input type="text" class="form-control @error('fungsi') is-invalid @enderror" id="fungsi" name="fungsi" placeholder="Masukkan Fungsi Surat" value="{{ old('fungsi') }}">
+                            @error('fungsi')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm btn-simpan">Simpan</button>
                     </form>
@@ -238,6 +303,13 @@
     </script>
 
     <script>
+        $('#miskin2').select2({
+            placeholder: "-- Pilih Penduduk --",
+            allowClear: true
+        });
+    </script>
+
+    <script>
         $('.btn-hapus').on('click', function (e) {
             e.preventDefault(); // prevent form submit
             var form = event.target.form;
@@ -267,6 +339,15 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session()->get("success") }}'
+            })
+        </script>
+    @endif
+    @if(session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session()->get("error") }}'
             })
         </script>
     @endif
