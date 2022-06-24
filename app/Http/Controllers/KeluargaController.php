@@ -142,22 +142,28 @@ class KeluargaController extends Controller
             'urutan' => ['required', 'numeric'],
         ]);
 
-        AnggotaKeluarga::create([
-            'nik' => $request->nik,
-            'no_kk' => $no_kk,
-            'nama' => $request->nama,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama' => $request->agama,
-            'pendidikan' => $request->pendidikan,
-            'pekerjaan' => $request->pekerjaan,
-            'status_perkawinan' => $request->status_perkawinan,
-            'status_hubungan' => $request->status_hubungan,
-            'urutan' => $request->urutan,
-        ]);
+        $check = AnggotaKeluarga::where('no_kk', $no_kk)->where('urutan', $request->urutan)->first();
 
-        return redirect()->route('data-penduduk.create-anggota', $request->no_kk)->with('success', 'Berhasil Menambah Anggota');
+        if ($check != NULL) {
+            return redirect()->back()->withInput()->with('error', 'Urutan Tersebut Telah Ada');
+        }else {
+            AnggotaKeluarga::create([
+                'nik' => $request->nik,
+                'no_kk' => $no_kk,
+                'nama' => $request->nama,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'agama' => $request->agama,
+                'pendidikan' => $request->pendidikan,
+                'pekerjaan' => $request->pekerjaan,
+                'status_perkawinan' => $request->status_perkawinan,
+                'status_hubungan' => $request->status_hubungan,
+                'urutan' => $request->urutan,
+            ]);
+
+            return redirect()->route('data-penduduk.create-anggota', $request->no_kk)->with('success', 'Berhasil Menambah Anggota');
+        }
     }
 
     public function update_anggota(Request $request, $nik)
@@ -183,20 +189,26 @@ class KeluargaController extends Controller
             ]);
         }
 
-        $item->nama = $request->nama;
-        $item->nik = $request->nik;
-        $item->tempat_lahir = $request->tempat_lahir;
-        $item->tanggal_lahir = $request->tanggal_lahir;
-        $item->jenis_kelamin = $request->jenis_kelamin;
-        $item->agama = $request->agama;
-        $item->pendidikan = $request->pendidikan;
-        $item->pekerjaan = $request->pekerjaan;
-        $item->status_perkawinan = $request->status_perkawinan;
-        $item->status_hubungan = $request->status_hubungan;
-        $item->urutan = $request->urutan;
-        $item->save();
+        $check = AnggotaKeluarga::where('no_kk', $item->no_kk)->where('urutan', $request->urutan)->first();
 
-        return redirect()->route('data-penduduk.create-anggota', $item->no_kk)->with('success', 'Berhasil Mengubah Anggota');
+        if ($check != NULL && $item->urutan != $request->urutan) {
+            return redirect()->back()->withInput()->with('error', 'Urutan Tersebut Telah Ada');
+        }else {
+            $item->nama = $request->nama;
+            $item->nik = $request->nik;
+            $item->tempat_lahir = $request->tempat_lahir;
+            $item->tanggal_lahir = $request->tanggal_lahir;
+            $item->jenis_kelamin = $request->jenis_kelamin;
+            $item->agama = $request->agama;
+            $item->pendidikan = $request->pendidikan;
+            $item->pekerjaan = $request->pekerjaan;
+            $item->status_perkawinan = $request->status_perkawinan;
+            $item->status_hubungan = $request->status_hubungan;
+            $item->urutan = $request->urutan;
+            $item->save();
+
+            return redirect()->route('data-penduduk.create-anggota', $item->no_kk)->with('success', 'Berhasil Mengubah Anggota');
+        }
     }
 
     public function destroy($no_kk)

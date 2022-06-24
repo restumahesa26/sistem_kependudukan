@@ -6,8 +6,10 @@ use App\Models\Keluarga;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class SemuaPendudukExport implements FromCollection, WithHeadings, ShouldAutoSize, WithMapping
 {
@@ -18,16 +20,15 @@ class SemuaPendudukExport implements FromCollection, WithHeadings, ShouldAutoSiz
     {
         return Keluarga::with(['anggota_keluargas','kepala_keluarga','anggota_keluarga'])->where('is_pindah', '!=', '1')->get();
     }
-
     public function map($keluarga): array
     {
         $return = array();
 
         foreach ($keluarga->anggota_keluarga as $value) {
             $return[] = [
-                $keluarga->no_kk,
+                '`' . $keluarga->no_kk,
                 $keluarga->kepala_keluarga->nama,
-                $keluarga->kepala_keluarga->nik,
+                '`' . $keluarga->kepala_keluarga->nik,
                 $keluarga->kepala_keluarga->tempat_lahir . ', ' . Carbon::parse($keluarga->kepala_keluarga->tanggal_lahir)->translatedFormat('d F Y'),
                 ($keluarga->kepala_keluarga->jenis_kelamin == 'L') ? 'Laki-Laki' : 'Perempuan',
                 $keluarga->kepala_keluarga->agama,
@@ -37,7 +38,7 @@ class SemuaPendudukExport implements FromCollection, WithHeadings, ShouldAutoSiz
                 $keluarga->rt,
                 $keluarga->rw,
                 $value->nama,
-                $value->nik,
+                '`' . $value->nik,
                 $value->tempat_lahir . ',' . Carbon::parse($value->tanggal_lahir)->translatedFormat('d F Y'),
                 ($value->jenis_kelamin == 'L') ? 'Laki-Laki' : 'Perempuan',
                 $value->agama,

@@ -64,7 +64,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_miskin">Apakah Keluarga Miskin?</label>
-                                <select name="is_miskin" id="is_miskin" class="form-control">
+                                <select name="is_miskin" id="is_miskin" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Miskin --</option>
                                     <option value="0" @if(old('is_miskin', $item->is_miskin) == '0') selected @endif>Tidak</option>
                                     <option value="1" @if(old('is_miskin', $item->is_miskin) == '1') selected @endif>Ya</option>
@@ -88,7 +88,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pindah">Apakah Keluarga Pindah?</label>
-                                <select name="is_pindah" id="is_pindah" class="form-control">
+                                <select name="is_pindah" id="is_pindah" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pindah --</option>
                                     <option value="0" @if(old('is_pindah', $item->is_pindah) == '0') selected @endif>Tidak</option>
                                     <option value="1" @if(old('is_pindah', $item->is_pindah) == '1') selected @endif>Ya</option>
@@ -112,7 +112,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pendatang">Apakah Keluarga Pendatang?</label>
-                                <select name="is_pendatang" id="is_pendatang" class="form-control">
+                                <select name="is_pendatang" id="is_pendatang" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pendatang --</option>
                                     <option value="0" @if(old('is_pendatang', $item->is_pendatang) == '0') selected @endif>Tidak</option>
                                     <option value="1" @if(old('is_pendatang', $item->is_pendatang) == '1') selected @endif>Ya</option>
@@ -714,6 +714,16 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session()->get("success") }}'
+            })
+        </script>
+    @endif
+
+    @if(session()->has('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session()->get("error") }}'
             })
         </script>
     @endif

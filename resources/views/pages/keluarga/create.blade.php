@@ -111,7 +111,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pendatang">Apakah Keluarga Pendatang?</label>
-                                <select name="is_pendatang" id="is_pendatang" class="form-control">
+                                <select name="is_pendatang" id="is_pendatang" class="form-control" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pendatang --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>

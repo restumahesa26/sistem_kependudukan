@@ -22,7 +22,7 @@ class PendudukMeninggalExport implements FromCollection, WithHeadings, ShouldAut
     public function map($item): array
     {
         return [
-            $item->nik,
+            '`' . $item->nik,
             $item->nama,
             $item->tempat_lahir . ', ' . Carbon::parse($item->tanggal_lahir)->translatedFormat('d F Y'),
             ($item->jenis_kelamin == 'L') ? 'Laki-Laki' : 'Perempuan',

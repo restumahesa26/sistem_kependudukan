@@ -35,9 +35,9 @@ class SemuaPendudukYearExport implements FromQuery, WithHeadings, ShouldAutoSize
 
         foreach ($keluarga->anggota_keluarga as $value) {
             $return[] = [
-                $keluarga->no_kk,
+                '`' . $keluarga->no_kk,
                 $keluarga->kepala_keluarga->nama,
-                $keluarga->kepala_keluarga->nik,
+                '`' . $keluarga->kepala_keluarga->nik,
                 $keluarga->kepala_keluarga->tempat_lahir . ', ' . Carbon::parse($keluarga->kepala_keluarga->tanggal_lahir)->translatedFormat('d F Y'),
                 ($keluarga->kepala_keluarga->jenis_kelamin == 'L') ? 'Laki-Laki' : 'Perempuan',
                 $keluarga->kepala_keluarga->agama,
@@ -47,7 +47,7 @@ class SemuaPendudukYearExport implements FromQuery, WithHeadings, ShouldAutoSize
                 $keluarga->rt,
                 $keluarga->rw,
                 $value->nama,
-                $value->nik,
+                '`' . $value->nik,
                 $value->tempat_lahir . ',' . Carbon::parse($value->tanggal_lahir)->translatedFormat('d F Y'),
                 ($value->jenis_kelamin == 'L') ? 'Laki-Laki' : 'Perempuan',
                 $value->agama,
