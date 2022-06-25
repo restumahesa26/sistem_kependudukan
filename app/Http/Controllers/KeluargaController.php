@@ -68,6 +68,9 @@ class KeluargaController extends Controller
             'alamat' => ['required', 'string', 'max:100'],
             'rt' => ['required', 'string', 'max:10'],
             'rw' => ['required', 'string', 'max:10'],
+            'is_miskin' => ['required'],
+            'is_pindah' => ['required'],
+            'is_pendatang' => ['required'],
         ]);
 
         Keluarga::create([
@@ -103,6 +106,9 @@ class KeluargaController extends Controller
             'alamat' => ['required', 'string', 'max:100'],
             'rt' => ['required', 'string', 'max:10'],
             'rw' => ['required', 'string', 'max:10'],
+            'is_miskin' => ['required'],
+            'is_pindah' => ['required'],
+            'is_pendatang' => ['required'],
         ]);
 
         if ($request->no_kk != $item->no_kk) {
@@ -139,7 +145,7 @@ class KeluargaController extends Controller
             'pekerjaan' => ['required', 'string', 'max:50'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
-            'urutan' => ['required', 'numeric'],
+            'urutan' => ['required', 'numeric']
         ]);
 
         $check = AnggotaKeluarga::where('no_kk', $no_kk)->where('urutan', $request->urutan)->first();
@@ -180,7 +186,7 @@ class KeluargaController extends Controller
             'pekerjaan' => ['required', 'string', 'max:50'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
-            'urutan' => ['required', 'numeric'],
+            'urutan' => ['required', 'numeric']
         ]);
 
         if ($request->nik != $item->nik) {

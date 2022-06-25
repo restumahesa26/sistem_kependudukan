@@ -221,7 +221,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nik">NIK</label>
-                                        <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ old('nik') }}" required>
+                                        <input type="number" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ old('nik') }}" required min="0">
                                         @error('nik')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -418,7 +418,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nik">NIK</label>
-                                        <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ old('nik', $item3->nik) }}" required>
+                                        <input type="number" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" placeholder="Masukkan NIK" value="{{ old('nik', $item3->nik) }}" required>
                                         @error('nik')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -63,7 +63,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_miskin">Apakah Keluarga Miskin?</label>
-                                <select name="is_miskin" id="is_miskin" class="form-control" required>
+                                <select name="is_miskin" id="is_miskin" class="form-control @error('is_miskin') is-invalid @enderror" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Miskin --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>
@@ -87,7 +87,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pindah">Apakah Keluarga Pindah?</label>
-                                <select name="is_pindah" id="is_pindah" class="form-control" required>
+                                <select name="is_pindah" id="is_pindah" class="form-control @error('is_pindah') is-invalid @enderror" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pindah --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>
@@ -111,7 +111,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="is_pendatang">Apakah Keluarga Pendatang?</label>
-                                <select name="is_pendatang" id="is_pendatang" class="form-control" required>
+                                <select name="is_pendatang" id="is_pendatang" class="form-control @error('is_pendatang') is-invalid @enderror" required>
                                     <option value="" hidden>-- Pilih Status Keluarga Pendatang --</option>
                                     <option value="0">Tidak</option>
                                     <option value="1">Ya</option>
