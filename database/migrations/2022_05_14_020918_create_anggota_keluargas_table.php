@@ -15,14 +15,14 @@ class CreateAnggotaKeluargasTable extends Migration
     {
         Schema::create('anggota_keluargas', function (Blueprint $table) {
             $table->string('nik', 16)->unique()->primary();
-            $table->string('nama', 100);
+            $table->string('nama', 40);
             $table->string('no_kk', 16);
-            $table->string('tempat_lahir', 100);
+            $table->string('tempat_lahir', 20);
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L','P']);
-            $table->string('agama', 20);
-            $table->string('pendidikan', 50);
-            $table->string('pekerjaan', 50);
+            $table->string('agama', 10);
+            $table->string('pendidikan', 25);
+            $table->string('pekerjaan', 25);
             $table->enum('status_perkawinan',['Kawin','Belum Kawin','Cerai Hidup','Cerai Mati'])->nullable();
             $table->enum('status_hubungan', ['Suami','Istri','Menantu','Anak','Cucu','Orang Tua','Mertua','Famili Lain','Pembantu'])->nullable();
             $table->integer('urutan')->nullable();

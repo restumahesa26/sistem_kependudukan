@@ -65,9 +65,9 @@ class KeluargaController extends Controller
     {
         $request->validate([
             'no_kk' => ['required', 'string', 'max:16', 'unique:keluargas', 'min:16'],
-            'alamat' => ['required', 'string', 'max:100'],
-            'rt' => ['required', 'string', 'max:10'],
-            'rw' => ['required', 'string', 'max:10'],
+            'alamat' => ['required', 'string', 'max:30'],
+            'rt' => ['required', 'string', 'max:5'],
+            'rw' => ['required', 'string', 'max:5'],
             'is_miskin' => ['required'],
             'is_pindah' => ['required'],
             'is_pendatang' => ['required'],
@@ -103,9 +103,9 @@ class KeluargaController extends Controller
         $item = Keluarga::findOrFail($no_kk);
 
         $request->validate([
-            'alamat' => ['required', 'string', 'max:100'],
-            'rt' => ['required', 'string', 'max:10'],
-            'rw' => ['required', 'string', 'max:10'],
+            'alamat' => ['required', 'string', 'max:30'],
+            'rt' => ['required', 'string', 'max:5'],
+            'rw' => ['required', 'string', 'max:5'],
             'is_miskin' => ['required'],
             'is_pindah' => ['required'],
             'is_pendatang' => ['required'],
@@ -136,13 +136,13 @@ class KeluargaController extends Controller
     {
         $request->validate([
             'nik' => ['required', 'string', 'max:16', 'unique:anggota_keluargas', 'min:16'],
-            'nama' => ['required', 'string', 'max:100'],
-            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:40'],
+            'tempat_lahir' => ['required', 'string', 'max:20'],
             'tanggal_lahir' => ['required', 'date'],
             'jenis_kelamin' => ['required', 'in:L,P'],
-            'agama' => ['required', 'string', 'max:20'],
-            'pendidikan' => ['required', 'string', 'max:50'],
-            'pekerjaan' => ['required', 'string', 'max:50'],
+            'agama' => ['required', 'string', 'max:10'],
+            'pendidikan' => ['required', 'string', 'max:25'],
+            'pekerjaan' => ['required', 'string', 'max:25'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
             'urutan' => ['required', 'numeric']
@@ -177,13 +177,13 @@ class KeluargaController extends Controller
         $item = AnggotaKeluarga::findOrFail($nik);
 
         $request->validate([
-            'nama' => ['required', 'string', 'max:100'],
-            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:40'],
+            'tempat_lahir' => ['required', 'string', 'max:20'],
             'tanggal_lahir' => ['required', 'date'],
             'jenis_kelamin' => ['required', 'in:L,P'],
-            'agama' => ['required', 'string', 'max:20'],
-            'pendidikan' => ['required', 'string', 'max:50'],
-            'pekerjaan' => ['required', 'string', 'max:50'],
+            'agama' => ['required', 'string', 'max:10'],
+            'pendidikan' => ['required', 'string', 'max:25'],
+            'pekerjaan' => ['required', 'string', 'max:25'],
             'status_perkawinan' => ['required', 'in:Kawin,Belum Kawin,Cerai Hidup,Cerai Mati'],
             'status_hubungan' => ['required', 'in:Suami,Istri,Menantu,Anak,Cucu,Orang Tua,Mertua,Famili Lain,Pembantu'],
             'urutan' => ['required', 'numeric']

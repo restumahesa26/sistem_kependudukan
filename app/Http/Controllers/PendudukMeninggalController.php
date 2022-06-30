@@ -103,13 +103,13 @@ class PendudukMeninggalController extends Controller
         $item = PendudukMeninggal::findOrFail($id);
 
         $request->validate([
-            'nama' => ['required', 'string', 'max:100'],
-            'tempat_lahir' => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:40'],
+            'tempat_lahir' => ['required', 'string', 'max:20'],
             'tanggal_lahir' => ['required', 'date'],
             'jenis_kelamin' => ['required', 'in:L,P'],
-            'agama' => ['required', 'string', 'max:20'],
-            'pendidikan' => ['required', 'string', 'max:50'],
-            'pekerjaan' => ['required', 'string', 'max:50'],
+            'agama' => ['required', 'string', 'max:10'],
+            'pendidikan' => ['required', 'string', 'max:25'],
+            'pekerjaan' => ['required', 'string', 'max:25'],
             'tanggal_meninggal' => ['required', 'date'],
         ]);
 

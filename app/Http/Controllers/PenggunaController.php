@@ -42,9 +42,9 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+            'nama' => ['required', 'string', 'max:40'],
+            'username' => ['required', 'string', 'max:25'],
+            'email' => ['required', 'string', 'email', 'max:40', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -96,13 +96,13 @@ class PenggunaController extends Controller
         $item = User::findOrFail($id);
 
         $request->validate([
-            'nama' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:100'],
+            'nama' => ['required', 'string', 'max:40'],
+            'username' => ['required', 'string', 'max:25'],
         ]);
 
         if ($item->email != $request->email) {
             $request->validate([
-                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:40', 'unique:users'],
             ]);
         }
 
